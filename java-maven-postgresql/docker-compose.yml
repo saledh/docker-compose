@@ -1,0 +1,39 @@
+services:
+  back-end:
+    image: 'openjdk-maven:17'
+    build: .
+    container_name: openjdk-17-jdk-maven
+    tty: true
+    stdin_open: true
+    depends_on:
+      - pg-db
+    env_file: .env
+    ports:
+      - "$LOCAL_SPRING_PORT:$DOCKER_SPRING_PORT"
+    volumes:
+      - home:/home
+    environment:
+      - POSTGRES_USER=$POSTGRES_USER
+      - POSTGRES_PASSWORD=$POSTGRES_PASSWORD
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/$POSTGRES_DB
+      - SPRING_DATASOURCE_USERNAME=$POSTGRES_USER
+      - SPRING_DATASOURCE_PASSWORD=$POSTGRES_PASSWORD
+      - SPRING_JPA_SHOW_SQL=true
+      - SPRING_JPA_HIBERNATE_FORMAT_SQL=true
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+
+  pg-db:
+    image: "postgres:17"
+    container_name: postgres-17
+    ports:
+      - "$LOCAL_PG_DB_PORT:$DOCKER_PG_DB_PORT"
+    environment:
+      - POSTGRES_USER=$POSTGRES_USER
+      - POSTGRES_PASSWORD=$POSTGRES_PASSWORD
+      - POSTGRES_DB=$POSTGRES_DB
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+
+volumes:
+  home:
+  pg-data:
