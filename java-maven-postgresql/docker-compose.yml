@@ -11,7 +11,7 @@ services:
     ports:
       - "$LOCAL_SPRING_PORT:$DOCKER_SPRING_PORT"
     volumes:
-      - home:/home
+      - ./home:/home
     environment:
       - POSTGRES_USER=$POSTGRES_USER
       - POSTGRES_PASSWORD=$POSTGRES_PASSWORD
@@ -35,5 +35,4 @@ services:
       - pg-data:/var/lib/postgresql/data
 
 volumes:
-  home:
   pg-data:
