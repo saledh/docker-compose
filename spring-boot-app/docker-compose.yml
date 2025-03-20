@@ -1,12 +1,12 @@
 services:
   back-end:
-    image: 'openjdk-maven:17'
+    image: 'saledh/workspace:java'
     build: .
-    container_name: openjdk-17-jdk-maven
+    container_name: spring-boot-app
     tty: true
     stdin_open: true
     depends_on:
-      - pg-db
+      - database
     env_file: .env
     ports:
       - "$LOCAL_SPRING_PORT:$DOCKER_SPRING_PORT"
@@ -22,9 +22,9 @@ services:
       - SPRING_JPA_HIBERNATE_FORMAT_SQL=true
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
 
-  pg-db:
+  database:
     image: "postgres:17"
-    container_name: postgres-17
+    container_name: app-db
     ports:
       - "$LOCAL_PG_DB_PORT:$DOCKER_PG_DB_PORT"
     environment:

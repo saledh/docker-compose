@@ -1,8 +1,7 @@
 services:
   front-end:
-    image: 'node-nvm'
-    build: .
-    container_name: node-nvm
+    image: 'saledh/workspace:node'
+    container_name: node-ws
     tty: true
     stdin_open: true
     ports:
